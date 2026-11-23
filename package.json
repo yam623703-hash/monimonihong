@@ -1,7 +1,7 @@
 {
   "name": "nodejs",
-  "version": "1,0,0",
-  "description": "Thsi is a node project",
+  "version": "1.0.0",
+  "description": "This is a node project",
   "main": "index.js",
   "author": "",
   "repository": "",
@@ -10,6 +10,9 @@
   "scripts": {
     "dev": "node index.js",
     "start": "node index.js"
+  },
+  "overrides": {
+    "tar": ">=7.5.19"
   },
   "dependencies": {
     "axios": "latest"
