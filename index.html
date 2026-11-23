@@ -1,966 +1,1371 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #4361ee;
-        }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
-        }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-        }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
-        }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4361ee;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
-            }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Arena Eval-全球主流大模型多维测评榜单</title>
+  <style>
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #111827;
+      --bg-card: #161f33;
+      --bg-hover: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-color: #263248;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-soft: rgba(59, 130, 246, 0.15);
+      --green: #10b981;
+      --green-soft: rgba(16, 185, 129, 0.15);
+      --purple: #8b5cf6;
+      --purple-soft: rgba(139, 92, 246, 0.15);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.15);
+      --rose: #f43f5e;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f1f5f9;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --bg-hover: #f8fafc;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border-color: #e2e8f0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: rgba(37, 99, 235, 0.1);
+      --green: #059669;
+      --green-soft: rgba(5, 150, 105, 0.12);
+      --purple: #7c3aed;
+      --purple-soft: rgba(124, 58, 237, 0.12);
+      --amber: #d97706;
+      --amber-soft: rgba(217, 119, 6, 0.12);
+      --rose: #e11d48;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background-color 0.25s, color 0.25s;
+    }
+
+    /* 顶部导航 */
+    header {
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-text span {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: block;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background: var(--bg-hover);
+      border-color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    /* 主容器 */
+    main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+    }
+
+    /* 概览指标卡片 */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .kpi-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* 筛选与搜索栏 */
+    .controls-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+
+    .tab-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      width: 230px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* 排行榜表格 */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .table-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+      margin-bottom: 32px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+
+    th {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    th:hover {
+      color: var(--text-primary);
+    }
+
+    th.sorted {
+      color: var(--accent);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 13.5px;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr {
+      transition: background-color 0.15s;
+    }
+
+    tbody tr:hover {
+      background-color: var(--bg-hover);
+    }
+
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      font-weight: 700;
+      font-size: 12px;
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+    }
+
+    .rank-1 { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; }
+    .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #fff; }
+    .rank-3 { background: linear-gradient(135deg, #b45309, #78350f); color: #fff; }
+
+    .model-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .model-name-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .model-vendor {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .license-pill {
+      font-size: 11px;
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .license-open {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .license-closed {
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .score-cell {
+      min-width: 105px;
+    }
+
+    .score-num {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .progress-bg {
+      width: 100%;
+      height: 5px;
+      background: var(--bg-primary);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--accent);
+    }
+
+    .price-text {
+      font-variant-numeric: tabular-nums;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+    }
+
+    .compare-checkbox {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    /* 双栏区域：雷达图对比 + 模型详情 */
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 960px) {
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .radar-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 10px;
+    }
+
+    .legend-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+    }
+
+    .compare-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .compare-item {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .compare-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .compare-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .compare-metrics strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 13.5px;
+    }
+
+    /* 实战 Prompt 盲测对比区 */
+    .arena-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .prompt-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .prompt-box {
+      background: var(--bg-primary);
+      border-left: 3px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 13.5px;
+    }
+
+    .prompt-box strong {
+      display: block;
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .responses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .response-col {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .resp-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .resp-body {
+      font-size: 13px;
+      color: var(--text-secondary);
+      white-space: pre-line;
+      margin-bottom: 14px;
+    }
+
+    .resp-foot {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      padding-top: 10px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    /* 底部悬浮对比提示条 */
+    .floating-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-secondary);
+      border: 1px solid var(--accent);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      padding: 10px 20px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 99;
+      font-size: 13px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 12.5px;
+      border-top: 1px solid var(--border-color);
+    }
+  </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
-                </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
-                
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
-                </div>
-            </div>
-        </div>
-    </section>
+<header>
+  <div class="nav-container">
+    <div class="brand">
+      <div class="logo-icon">AI</div>
+      <div class="brand-text">
+        <h1>AI Arena Eval 2026</h1>
+        <span>主流大语言模型多维基准与实战盲测平台</span>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <span class="badge-live"><span class="dot"></span> 基准已更新至 2026.11</span>
+      <button class="btn" id="themeToggle" title="切换深浅色主题">🌓 切换主题</button>
+    </div>
+  </div>
+</header>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<main>
+  <!-- 顶部核心指标卡片 -->
+  <section class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">综合能力榜首</div>
+      <div class="kpi-value">
+        <span>OpenAI o3</span>
+        <span class="kpi-tag" style="background: var(--amber-soft); color: var(--amber);">95.8 分</span>
+      </div>
+      <div class="kpi-sub">数学与深度逻辑推理单项 98.2 领先</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">代码工程榜首</div>
+      <div class="kpi-value">
+        <span>Claude 4 Sonnet</span>
+        <span class="kpi-tag" style="background: var(--purple-soft); color: var(--purple);">97.4 分</span>
+      </div>
+      <div class="kpi-sub">SWE-bench 复杂仓库级重构首选</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">开源权重榜首</div>
+      <div class="kpi-value">
+        <span>DeepSeek-R1</span>
+        <span class="kpi-tag" style="background: var(--green-soft); color: var(--green);">94.3 分</span>
+      </div>
+      <div class="kpi-sub">MIT 协议开源，推理与中文表现突出</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">超长上下文之王</div>
+      <div class="kpi-value">
+        <span>Gemini 2.5 Pro</span>
+        <span class="kpi-tag" style="background: var(--accent-soft); color: var(--accent);">2M Tokens</span>
+      </div>
+      <div class="kpi-sub">原生全模态理解与百万级代码库检索</div>
+    </div>
+  </section>
 
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- 筛选与搜索控制栏 -->
+  <section class="controls-bar">
+    <div class="filter-tabs" id="categoryTabs">
+      <button class="tab-btn active" data-filter="all">全部模型 (10)</button>
+      <button class="tab-btn" data-filter="open">开源权重</button>
+      <button class="tab-btn" data-filter="reasoning">推理霸榜 (&ge;95)</button>
+      <button class="tab-btn" data-filter="coding">编程主力 (&ge;94)</button>
+      <button class="tab-btn" data-filter="chinese">中文专精 (&ge;95)</button>
+      <button class="tab-btn" data-filter="budget">高性价比 (&le;$1/M)</button>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" class="search-input" placeholder="搜索模型名称或开发厂商..." />
+    </div>
+  </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- 排行榜主表 -->
+  <section>
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">综合能力排行榜 (点击表头可排序)</h2>
+        <p class="section-desc">测评维度涵盖 GPQA 科学推理、LiveCodeBench 编程、MMMU 多模态、C-Eval 中文理解及 API 成本</p>
+      </div>
+      <span class="section-desc">勾选右侧复选框（最多 3 个）可在下方雷达图实时对比</span>
+    </div>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
-                    </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="table-wrapper">
+      <table id="leaderboardTable">
+        <thead>
+          <tr>
+            <th style="width: 60px;">排名</th>
+            <th>模型名称 / 厂商</th>
+            <th data-sort="overall" class="sorted">综合总分 ▼</th>
+            <th data-sort="reasoning">逻辑推理</th>
+            <th data-sort="coding">代码编程</th>
+            <th data-sort="multimodal">多模态</th>
+            <th data-sort="chinese">中文理解</th>
+            <th data-sort="context">上下文</th>
+            <th data-sort="inputPrice">API 价格 (输入/输出 $/1M)</th>
+            <th style="width: 70px; text-align: center;">对比</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
+  <!-- 雷达图与深度参数对比 -->
+  <section class="analysis-grid" id="compareSection">
+    <div class="panel-card">
+      <div class="section-header">
+        <div>
+          <h3 class="section-title">五维能力雷达图对比</h3>
+          <p class="section-desc">直观展示所选模型在推理、编程、多模态、中文及性价比上的均衡度</p>
         </div>
-    </section>
+        <button class="btn" id="resetCompareBtn">重置为前三名</button>
+      </div>
+      <div class="radar-container">
+        <svg id="radarSvg" width="360" height="330" viewBox="0 0 360 330"></svg>
+        <div class="legend-list" id="radarLegend"></div>
+      </div>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
-                    </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
-            </div>
+    <div class="panel-card">
+      <div class="section-header">
+        <div>
+          <h3 class="section-title">所选模型核心参数拆解</h3>
+          <p class="section-desc">选型建议、特色优势与吞吐成本参考</p>
         </div>
-    </footer>
+      </div>
+      <div class="compare-cards" id="compareCards"></div>
+    </div>
+  </section>
 
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
-                    }
-                }
-            });
-        });
-        
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
-            }
-        ];
-        
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
-        
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
+  <!-- 实战 Prompt 盲测对比区 -->
+  <section class="arena-card">
+    <div class="section-header">
+      <div>
+        <h3 class="section-title">实战 Prompt 实测对比台</h3>
+        <p class="section-desc">查看不同旗舰模型在真实高频任务中的解题思路、响应速度与输出质量</p>
+      </div>
+    </div>
+
+    <div class="prompt-selector" id="promptTabs"></div>
+    <div class="prompt-box" id="promptDisplay"></div>
+    <div class="responses-grid" id="responsesGrid"></div>
+  </section>
+</main>
+
+<div class="floating-bar" id="floatingBar">
+  <span id="selectedCountText">已选择 3 个模型进行雷达图对比</span>
+  <a href="#compareSection" class="btn btn-primary" style="text-decoration: none;">查看对比图 ↑</a>
+</div>
+
+<footer>
+  AI Arena Eval 2026 &copy; 独立大模型测评基准演示页面 · 数据综合自公开学术基准与盲测统计
+</footer>
+
+<script>
+  // 主流 AI 模型数据集
+  const modelsData = [
+    {
+      id: "openai-o3",
+      name: "OpenAI o3",
+      vendor: "OpenAI",
+      license: "闭源",
+      overall: 95.8,
+      reasoning: 98.2,
+      coding: 96.5,
+      multimodal: 94.0,
+      chinese: 92.5,
+      valueScore: 76.0,
+      context: 256,
+      contextLabel: "256K",
+      inputPrice: 15.0,
+      outputPrice: 60.0,
+      speed: "68 tok/s",
+      highlight: "深度思维链推理天花板，适合科研攻坚与复杂系统架构设计"
+    },
+    {
+      id: "gemini-25-pro",
+      name: "Gemini 2.5 Pro",
+      vendor: "Google DeepMind",
+      license: "闭源",
+      overall: 95.5,
+      reasoning: 95.6,
+      coding: 95.0,
+      multimodal: 97.8,
+      chinese: 93.0,
+      valueScore: 89.0,
+      context: 2000,
+      contextLabel: "2M",
+      inputPrice: 1.25,
+      outputPrice: 10.0,
+      speed: "115 tok/s",
+      highlight: "原生全模态与 200 万超长上下文，支持整库代码与长视频直接解析"
+    },
+    {
+      id: "claude-4-sonnet",
+      name: "Claude 4 Sonnet",
+      vendor: "Anthropic",
+      license: "闭源",
+      overall: 95.2,
+      reasoning: 94.8,
+      coding: 97.4,
+      multimodal: 93.2,
+      chinese: 91.8,
+      valueScore: 85.5,
+      context: 200,
+      contextLabel: "200K",
+      inputPrice: 3.0,
+      outputPrice: 15.0,
+      speed: "88 tok/s",
+      highlight: "工程代码准确度与指令遵循极强，前端生成与多文件重构首选"
+    },
+    {
+      id: "deepseek-r1",
+      name: "DeepSeek-R1",
+      vendor: "深度求索 DeepSeek",
+      license: "开源",
+      overall: 94.3,
+      reasoning: 96.8,
+      coding: 95.2,
+      multimodal: 82.0,
+      chinese: 96.5,
+      valueScore: 96.0,
+      context: 128,
+      contextLabel: "128K",
+      inputPrice: 0.55,
+      outputPrice: 2.19,
+      speed: "74 tok/s",
+      highlight: "MIT 协议开源推理标杆，数学/代码推理比肩顶尖闭源，性价比极高"
+    },
+    {
+      id: "grok-3",
+      name: "Grok-3",
+      vendor: "xAI",
+      license: "闭源",
+      overall: 94.0,
+      reasoning: 95.1,
+      coding: 94.3,
+      multimodal: 91.5,
+      chinese: 89.5,
+      valueScore: 83.0,
+      context: 128,
+      contextLabel: "128K",
+      inputPrice: 3.0,
+      outputPrice: 15.0,
+      speed: "95 tok/s",
+      highlight: "大规模算力集群训练，数理逻辑与实时信息整合能力突出"
+    },
+    {
+      id: "qwen-max",
+      name: "Qwen-Max / Qwen3",
+      vendor: "阿里云通义",
+      license: "开源",
+      overall: 93.8,
+      reasoning: 93.5,
+      coding: 94.1,
+      multimodal: 93.6,
+      chinese: 97.2,
+      valueScore: 95.0,
+      context: 128,
+      contextLabel: "128K",
+      inputPrice: 0.40,
+      outputPrice: 1.20,
+      speed: "105 tok/s",
+      highlight: "中文语境与工具调用（Agent）能力第一梯队，开源生态完备"
+    },
+    {
+      id: "kimi-k15",
+      name: "Kimi k1.5",
+      vendor: "月之暗面 Moonshot",
+      license: "闭源",
+      overall: 92.6,
+      reasoning: 94.5,
+      coding: 92.2,
+      multimodal: 91.0,
+      chinese: 96.2,
+      valueScore: 91.5,
+      context: 200,
+      contextLabel: "200K",
+      inputPrice: 0.50,
+      outputPrice: 2.00,
+      speed: "92 tok/s",
+      highlight: "强化学习长思维链与中文长文档深度研报分析表现优异"
+    },
+    {
+      id: "llama-4-maverick",
+      name: "Llama 4 Maverick",
+      vendor: "Meta AI",
+      license: "开源",
+      overall: 92.4,
+      reasoning: 91.8,
+      coding: 92.6,
+      multimodal: 92.0,
+      chinese: 88.4,
+      valueScore: 97.5,
+      context: 1000,
+      contextLabel: "1M",
+      inputPrice: 0.20,
+      outputPrice: 0.60,
+      speed: "140 tok/s",
+      highlight: "MoE 架构开源主力，百万上下文与极高推理吞吐适合私有化部署"
+    },
+    {
+      id: "doubao-15-pro",
+      name: "Doubao-1.5-Pro",
+      vendor: "字节跳动 Seed",
+      license: "闭源",
+      overall: 92.1,
+      reasoning: 91.2,
+      coding: 90.8,
+      multimodal: 92.5,
+      chinese: 96.8,
+      valueScore: 98.2,
+      context: 256,
+      contextLabel: "256K",
+      inputPrice: 0.11,
+      outputPrice: 0.28,
+      speed: "135 tok/s",
+      highlight: "极致低延迟与高并发吞吐，中文创作与企业客服场景成本极低"
+    },
+    {
+      id: "glm-4-plus",
+      name: "GLM-4-Plus / Z1",
+      vendor: "智谱 AI",
+      license: "开源",
+      overall: 91.5,
+      reasoning: 92.0,
+      coding: 91.0,
+      multimodal: 90.5,
+      chinese: 95.8,
+      valueScore: 96.8,
+      context: 128,
+      contextLabel: "128K",
+      inputPrice: 0.14,
+      outputPrice: 0.14,
+      speed: "120 tok/s",
+      highlight: "端到端多模态交互与函数调用稳定性高，国内政企本地化部署热门"
+    }
+  ];
+
+  // 实战 Prompt 测试案例
+  const arenaPrompts = [
+    {
+      id: "coding",
+      title: "① 高并发算法与锁优化",
+      prompt: "在 Go 语言中实现一个支持高并发读写的本地缓存，要求支持 TTL 过期清理且避免全局锁竞争（Lock Contention），给出核心数据结构与关键代码。",
+      responses: [
+        {
+          model: "Claude 4 Sonnet",
+          badge: "工程规范最佳",
+          text: "采用 分片锁（Sharded Map，如 256 个分片）+ 惰性删除 + 异步时间轮/最小堆清理：\n1. 通过 FNV-1a 哈希将 Key 路由到对应 Shard，每个 Shard 独立持有 sync.RWMutex；\n2. Get 操作先加 RLock 校验 expireAt，过期则触发异步淘汰信号，避免读路径升级写锁；\n3. 后台 Goroutine 每秒随机抽样 20 个 Key 清理过期项（参考 Redis 策略），防止单次 STW 抖动。",
+          ttft: "0.42s",
+          speed: "91 tok/s",
+          winRate: "54%"
+        },
+        {
+          model: "DeepSeek-R1",
+          badge: "思路推导最深",
+          text: "【思考过程】全局 sync.Map 虽读快但无原生 TTL 淘汰；单把 RWMutex 在 32 核下写竞争严重。\n【核心方案】设计 64 分片结构体 `shardedCache`，每个分片内部维护 `map[string]entry` 与双向链表（兼顾 LRU）。关键优化：读命中未过期时完全无锁修改链表，改用原子时间戳 `atomic.Int64` 记录访问时间，仅在写或定期扫描时重排链表。",
+          ttft: "1.85s (含推理)",
+          speed: "76 tok/s",
+          winRate: "46%"
         }
-        
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
+      ]
+    },
+    {
+      id: "reasoning",
+      title: "② 反直觉逻辑陷阱推理",
+      prompt: "甲、乙、丙三人进行三方决斗，命中率分别为：甲 30%，乙 50%，丙 100%。按甲 -> 乙 -> 丙的顺序轮流开枪（每人每次一发，可选择向任意目标或空地开枪），直到只剩一人。假设三人都绝对理性，甲第一枪应该打谁？",
+      responses: [
+        {
+          model: "OpenAI o3",
+          badge: "博弈树零误差",
+          text: "结论：甲第一枪应该故意打向空地（放弃射击）。\n\n严密博弈推导：\n1. 若甲第一枪击中丙：轮到乙先手射击甲（50% 命中），甲生存率骤降至约 21.4%；\n2. 若甲第一枪击中乙：轮到 100% 命中的丙射击，甲必死（生存率 0%）；\n3. 若甲故意打空：轮到乙时，乙面临同样逻辑，乙必须优先打威胁最大的丙（若乙打中丙，进入甲先手的甲乙对决，甲生存率 30%；若乙未打中丙，丙必杀乙，随后轮到甲先手打丙，甲仍有 30% 胜率）。因此打空使甲综合生存率提升至 30%（最优解）。",
+          ttft: "2.10s (含推理)",
+          speed: "70 tok/s",
+          winRate: "62%"
+        },
+        {
+          model: "Qwen-Max / Qwen3",
+          badge: "条理清晰简洁",
+          text: "甲的最优策略是【向空地开枪】。\n\n核心原因在于“弱者搭便车效应”：\n- 如果甲先消灭了乙或丙中的任何一人，幸存的另一方（无论是 50% 的乙还是 100% 的丙）都会立刻把枪口对准甲，且先手权在对方手里；\n- 甲故意打空后，把“必须解决掉 100% 命中率的丙”这个难题甩给了下一顺位的乙。无论乙是否打中丙，最终都会形成甲与幸存者单挑且由甲先开枪的局面，最大化甲的存活概率。",
+          ttft: "0.38s",
+          speed: "108 tok/s",
+          winRate: "38%"
         }
-        
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
-        });
-        
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
-    </script>
+      ]
+    },
+    {
+      id: "chinese",
+      title: "③ 中文古今语境与商业润色",
+      prompt: "将《史记》中“桃李不言，下自成蹊”的精神内核，转化为一段面向硬科技创业团队的年度产品发布会开场白（120字以内，克制有力量）。",
+      responses: [
+        {
+          model: "Qwen-Max / Qwen3",
+          badge: "中文语感最佳",
+          text: "过去一年，我们没有把预算花在喧嚣的声量里，而是把每一行代码、每一次架构重构都沉进底层。我们始终相信，真正改变行业的技术不需要震耳欲聋的口号——当产品足够锋利、体验足够纯粹，用户自会循着光走来，在荒原上踩出一条通往未来的路。",
+          ttft: "0.31s",
+          speed: "112 tok/s",
+          winRate: "58%"
+        },
+        {
+          model: "Doubao-1.5-Pro",
+          badge: "演讲节奏感强",
+          text: "在算法与参数喧嚣的时代，我们选择了一条更安静的路。没有铺天盖地的预热，只有实验室里三百多个日夜的打磨。好产品自己会说话——当延迟再降十毫秒、准确率再进一分，千万开发者的选择，就是我们最好的发布词。",
+          ttft: "0.24s",
+          speed: "138 tok/s",
+          winRate: "42%"
+        }
+      ]
+    }
+  ];
+
+  // 状态管理
+  let currentFilter = "all";
+  let currentSort = { key: "overall", asc: false };
+  let searchQuery = "";
+  let selectedModelIds = ["openai-o3", "gemini-25-pro", "deepseek-r1"];
+  let currentPromptId = "coding";
+
+  const radarColors = ["#3b82f6", "#10b981", "#f59e0b"];
+
+  // 主题切换
+  const themeToggle = document.getElementById("themeToggle");
+  themeToggle.addEventListener("click", () => {
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    document.documentElement.setAttribute("data-theme", isLight ? "dark" : "light");
+    renderRadarChart();
+  });
+
+  // 过滤逻辑
+  function getFilteredModels() {
+    return modelsData
+      .filter(m => {
+        if (currentFilter === "open" && m.license !== "开源") return false;
+        if (currentFilter === "reasoning" && m.reasoning < 95) return false;
+        if (currentFilter === "coding" && m.coding < 94) return false;
+        if (currentFilter === "chinese" && m.chinese < 95) return false;
+        if (currentFilter === "budget" && m.inputPrice > 1.0) return false;
+
+        if (searchQuery.trim() !== "") {
+          const q = searchQuery.toLowerCase();
+          return m.name.toLowerCase().includes(q) || m.vendor.toLowerCase().includes(q);
+        }
+        return true;
+      })
+      .sort((a, b) => {
+        const valA = a[currentSort.key];
+        const valB = b[currentSort.key];
+        return currentSort.asc ? valA - valB : valB - valA;
+      });
+  }
+
+  // 渲染排行榜表格
+  function renderTable() {
+    const tbody = document.getElementById("tableBody");
+    const list = getFilteredModels();
+
+    if (list.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:32px; color:var(--text-secondary);">未找到匹配的 AI 模型，请尝试调整筛选条件。</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = list.map((m, idx) => {
+      const rankClass = idx === 0 ? "rank-1" : idx === 1 ? "rank-2" : idx === 2 ? "rank-3" : "";
+      const licenseClass = m.license === "开源" ? "license-open" : "license-closed";
+      const isChecked = selectedModelIds.includes(m.id) ? "checked" : "";
+
+      const renderScore = (val, color = "var(--accent)") => `
+        <div class="score-cell">
+          <span class="score-num">${val.toFixed(1)}</span>
+          <div class="progress-bg">
+            <div class="progress-fill" style="width: ${Math.max(0, (val - 70) * 3.33)}%; background: ${color};"></div>
+          </div>
+        </div>
+      `;
+
+      return `
+        <tr>
+          <td><span class="rank-badge ${rankClass}">${idx + 1}</span></td>
+          <td>
+            <div class="model-info">
+              <div class="model-name-row">
+                <span>${m.name}</span>
+                <span class="license-pill ${licenseClass}">${m.license}</span>
+              </div>
+              <span class="model-vendor">${m.vendor}</span>
+            </div>
+          </td>
+          <td>${renderScore(m.overall, "var(--accent)")}</td>
+          <td>${renderScore(m.reasoning, "#8b5cf6")}</td>
+          <td>${renderScore(m.coding, "#10b981")}</td>
+          <td>${renderScore(m.multimodal, "#f59e0b")}</td>
+          <td>${renderScore(m.chinese, "#ec4899")}</td>
+          <td><strong>${m.contextLabel}</strong></td>
+          <td class="price-text">$${m.inputPrice.toFixed(2)} / $${m.outputPrice.toFixed(2)}</td>
+          <td style="text-align: center;">
+            <input type="checkbox" class="compare-checkbox" data-id="${m.id}" ${isChecked} />
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    // 绑定复选框事件
+    document.querySelectorAll(".compare-checkbox").forEach(cb => {
+      cb.addEventListener("change", (e) => {
+        const id = e.target.getAttribute("data-id");
+        if (e.target.checked) {
+          if (selectedModelIds.length >= 3) {
+            e.target.checked = false;
+            alert("最多同时对比 3 个模型，请先取消勾选其中一个。");
+            return;
+          }
+          selectedModelIds.push(id);
+        } else {
+          if (selectedModelIds.length <= 1) {
+            e.target.checked = true;
+            alert("请至少保留 1 个模型用于展示。");
+            return;
+          }
+          selectedModelIds = selectedModelIds.filter(item => item !== id);
+        }
+        updateFloatingBar();
+        renderRadarChart();
+        renderCompareCards();
+      });
+    });
+  }
+
+  // 更新底部悬浮提示
+  function updateFloatingBar() {
+    const names = selectedModelIds
+      .map(id => modelsData.find(m => m.id === id)?.name)
+      .filter(Boolean)
+      .join(" vs ");
+    document.getElementById("selectedCountText").textContent = `当前对比 (${selectedModelIds.length}/3)：${names}`;
+  }
+
+  // 渲染纯 SVG 五维雷达图
+  function renderRadarChart() {
+    const svg = document.getElementById("radarSvg");
+    const legend = document.getElementById("radarLegend");
+    const cx = 180, cy = 165, maxR = 112;
+    const dimensions = [
+      { key: "reasoning", label: "逻辑推理" },
+      { key: "coding", label: "代码编程" },
+      { key: "multimodal", label: "多模态" },
+      { key: "chinese", label: "中文理解" },
+      { key: "valueScore", label: "性价比" }
+    ];
+    const total = dimensions.length;
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    const gridStroke = isLight ? "#cbd5e1" : "#334155";
+    const labelFill = isLight ? "#334155" : "#cbd5e1";
+
+    let svgContent = "";
+
+    // 5 层同心五边形网格 (75 ~ 100 分映射)
+    for (let level = 1; level <= 5; level++) {
+      const r = (maxR / 5) * level;
+      const pts = dimensions.map((_, i) => {
+        const angle = (Math.PI * 2 * i) / total - Math.PI / 2;
+        return `${(cx + r * Math.cos(angle)).toFixed(1)},${(cy + r * Math.sin(angle)).toFixed(1)}`;
+      }).join(" ");
+      svgContent += `<polygon points="${pts}" fill="none" stroke="${gridStroke}" stroke-width="1" stroke-dasharray="${level < 5 ? '3,3' : '0'}" />`;
+    }
+
+    // 轴线与维度文字
+    dimensions.forEach((dim, i) => {
+      const angle = (Math.PI * 2 * i) / total - Math.PI / 2;
+      const x2 = cx + maxR * Math.cos(angle);
+      const y2 = cy + maxR * Math.sin(angle);
+      const lx = cx + (maxR + 24) * Math.cos(angle);
+      const ly = cy + (maxR + 20) * Math.sin(angle);
+      svgContent += `<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${gridStroke}" stroke-width="1" />`;
+      svgContent += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="${labelFill}" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">${dim.label}</text>`;
+    });
+
+    // 绘制所选模型多边形
+    const selectedModels = selectedModelIds.map(id => modelsData.find(m => m.id === id)).filter(Boolean);
+
+    selectedModels.forEach((model, idx) => {
+      const color = radarColors[idx % radarColors.length];
+      const pts = dimensions.map((dim, i) => {
+        const val = model[dim.key];
+        // 将 75~100 分线性映射到 0.15~1.0 半径区间，突出旗舰差异
+        const norm = Math.max(0.15, Math.min(1, (val - 75) / 25));
+        const r = maxR * norm;
+        const angle = (Math.PI * 2 * i) / total - Math.PI / 2;
+        return `${(cx + r * Math.cos(angle)).toFixed(1)},${(cy + r * Math.sin(angle)).toFixed(1)}`;
+      }).join(" ");
+
+      svgContent += `<polygon points="${pts}" fill="${color}" fill-opacity="0.18" stroke="${color}" stroke-width="2.2" />`;
+    });
+
+    svg.innerHTML = svgContent;
+
+    legend.innerHTML = selectedModels.map((m, idx) => `
+      <div class="legend-item">
+        <span class="legend-dot" style="background:${radarColors[idx % radarColors.length]}"></span>
+        <span>${m.name} (${m.overall})</span>
+      </div>
+    `).join("");
+  }
+
+  // 渲染对比详情卡片
+  function renderCompareCards() {
+    const container = document.getElementById("compareCards");
+    const selectedModels = selectedModelIds.map(id => modelsData.find(m => m.id === id)).filter(Boolean);
+
+    container.innerHTML = selectedModels.map((m, idx) => `
+      <div class="compare-item" style="border-left: 3px solid ${radarColors[idx % radarColors.length]}">
+        <div class="compare-item-header">
+          <div>
+            <strong>${m.name}</strong>
+            <span style="font-size:12px; color:var(--text-secondary); margin-left:6px;">${m.vendor} · ${m.license}</span>
+          </div>
+          <span style="font-weight:700; color:${radarColors[idx % radarColors.length]}">综合 ${m.overall}</span>
+        </div>
+        <p style="font-size:12.5px; color:var(--text-secondary); margin-bottom:10px;">${m.highlight}</p>
+        <div class="compare-metrics">
+          <div>生成速度<strong>${m.speed}</strong></div>
+          <div>最大上下文<strong>${m.contextLabel}</strong></div>
+          <div>输出单价<strong>$${m.outputPrice.toFixed(2)} / 1M</strong></div>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  // 渲染实战 Prompt 盲测区
+  function renderArena() {
+    const tabsEl = document.getElementById("promptTabs");
+    const promptEl = document.getElementById("promptDisplay");
+    const gridEl = document.getElementById("responsesGrid");
+
+    tabsEl.innerHTML = arenaPrompts.map(p => `
+      <button class="tab-btn ${p.id === currentPromptId ? 'active' : ''}" data-pid="${p.id}">${p.title}</button>
+    `).join("");
+
+    tabsEl.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentPromptId = btn.getAttribute("data-pid");
+        renderArena();
+      });
+    });
+
+    const current = arenaPrompts.find(p => p.id === currentPromptId);
+    promptEl.innerHTML = `<strong>测试指令 (Prompt)</strong>${current.prompt}`;
+
+    gridEl.innerHTML = current.responses.map(r => `
+      <div class="response-col">
+        <div>
+          <div class="resp-head">
+            <strong>${r.model}</strong>
+            <span class="kpi-tag" style="background:var(--accent-soft); color:var(--accent);">${r.badge}</span>
+          </div>
+          <div class="resp-body">${r.text}</div>
+        </div>
+        <div class="resp-foot">
+          <span>首字延迟: ${r.ttft}</span>
+          <span>吞吐: ${r.speed}</span>
+          <span style="color:var(--green); font-weight:600;">盲测偏好率: ${r.winRate}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  // 事件绑定：分类标签
+  document.querySelectorAll("#categoryTabs .tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#categoryTabs .tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.getAttribute("data-filter");
+      renderTable();
+    });
+  });
+
+  // 事件绑定：搜索框
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    searchQuery = e.target.value;
+    renderTable();
+  });
+
+  // 事件绑定：表头排序
+  document.querySelectorAll("th[data-sort]").forEach(th => {
+    th.addEventListener("click", () => {
+      const key = th.getAttribute("data-sort");
+      if (currentSort.key === key) {
+        currentSort.asc = !currentSort.asc;
+      } else {
+        currentSort.key = key;
+        // 价格默认升序（越便宜越靠前），分数默认降序
+        currentSort.asc = key === "inputPrice";
+      }
+      document.querySelectorAll("th[data-sort]").forEach(el => {
+        el.classList.remove("sorted");
+        el.textContent = el.textContent.replace(/ [▲▼]/g, "");
+      });
+      th.classList.add("sorted");
+      th.textContent += currentSort.asc ? " ▲" : " ▼";
+      renderTable();
+    });
+  });
+
+  // 重置对比模型
+  document.getElementById("resetCompareBtn").addEventListener("click", () => {
+    selectedModelIds = ["openai-o3", "gemini-25-pro", "deepseek-r1"];
+    renderTable();
+    updateFloatingBar();
+    renderRadarChart();
+    renderCompareCards();
+  });
+
+  // 初始化渲染
+  renderTable();
+  updateFloatingBar();
+  renderRadarChart();
+  renderCompareCards();
+  renderArena();
+</script>
 </body>
 </html>
